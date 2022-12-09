@@ -1,0 +1,47 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}{% endblock %} - Mi Blog</title>
+    {% block meta %}{% endblock %}
+  </head>
+  <body>
+    <header id="menu">
+      <!-- Barra de menu --->
+      <nav id="barra-menu">
+        <ul>
+          <li><a href="/index">inicio</a></li>
+        </ul>
+      </nav>
+      <!-- Menu flotante de navegacion -->
+      <div id="menu-flotante">
+        <button id="botn-menuf">menu</button>
+        <nav id="pop-nav">
+          <ul>
+            <li><a href="/index">inicio</a></li>
+          </ul>
+        </nav>
+      </div>
+      <!-- datos de usario logeado -->
+      <div>
+        {% if not g.user is none%}
+          <p>¡Hola!</p>
+          <p><b>{{ g.user['username'] }}</b></p>
+          <li><a href="{{ url_for('user.logout') }}">Log Out</a>
+        {% enif %}
+      </div>
+    </header>
+    <section class="content">
+      <header>
+        {% block header %}{% endblock %}
+      </header>
+      {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+      {% block content %}{% endblock %}
+    </section>
+  </body>
+</html>
